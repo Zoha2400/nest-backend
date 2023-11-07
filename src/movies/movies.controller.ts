@@ -6,6 +6,7 @@ import {
   Delete,
   Patch,
   Body,
+  Query,
 } from '@nestjs/common';
 
 @Controller('movies')
@@ -15,7 +16,12 @@ export class MoviesController {
     return `there will be all films`;
   }
 
-  @Get('/:id')
+  @Get('search')
+  search(@Query('year') year: string) {
+    return `We are looking for a film which created after ${year}`;
+  }
+
+  @Get(':id')
   getOne(@Param('id') id: string): string {
     return `a num of one film ${id}`;
   }
@@ -26,12 +32,12 @@ export class MoviesController {
     return 'This function creates a new film';
   }
 
-  @Delete('/:id')
+  @Delete(':id')
   remove(@Param('id') moveId: string) {
     return `This function removes a film ${moveId}`;
   }
 
-  @Patch('/:id')
+  @Patch(':id')
   patch(@Param('id') movieId: string, @Body() updateData) {
     return {
       updatedMovie: movieId,
